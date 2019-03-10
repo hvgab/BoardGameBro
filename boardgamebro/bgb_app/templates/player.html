@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<header>
+  <h1>{{player.name}}</h1>
+</header>
+
+<section>
+  Total winrate: {{winpercent|floatformat}}%
+  <progress class="progress" value="{{winpercent}}" max="100">{{winpercent|floatformat}}%</progress>
+</section>
+
+
+{% endblock %}
