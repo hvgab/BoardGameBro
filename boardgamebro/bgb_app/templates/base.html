@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css">
+    <title>BoardGameBro</title>
+  </head>
+  <body>
+    <div class="columns">
+      <div class="column is-narrow">
+        <div class="section">
+          <nav class="menu">
+            <a class="menu-item" href="{% url 'bgb:home' %}">Home</a>
+            <p class="menu-label">General</p>
+            <ul class="menu-list">
+              <li><a href="{% url 'bgb:player-list' %}">Players</a></li>
+              <li><a href="{% url 'bgb:game-list' %}">Games</a></li>
+              <li><a href="{% url 'bgb:play-list' %}">Plays</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="column">
+        <section class="section">
+          {% block content %}
+          {% endblock %}
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

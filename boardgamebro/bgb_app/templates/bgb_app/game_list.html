@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load bgb_extras %}
+
+{% block content %}
+
+<section class="section container">
+  <table class="table">
+    <thead>
+      <tr>
+      {% for field in fields %}
+        <td>{{ field }}</td>
+      {% endfor %}
+    </tr>
+    </thead>
+    {% for row in object_list %}
+    <tr>
+      {% for field in fields %}
+        <td>{{ row|get_attr:field }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+
+{% endblock %}

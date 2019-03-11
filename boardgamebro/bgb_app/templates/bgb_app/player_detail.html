@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="">
+
+<header class="hero">
+  <div class="hero-body">
+    <h1 class="title">{{player.name}}</h1>
+  </div>
+</header>
+
+<div class="level">
+  <div class="level-item has-text-centered">
+    <div class="">
+      <p class="heading">Wins</p>
+      <p class="title">{{ player.win_count }}</p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div class="">
+      <p class="heading">Plays</p>
+      <p class="title">{{ player.play_count }}</p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div class="">
+      <p class="heading">Owned Games</p>
+      <p class="title">{{ player.game_count }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="columns">
+  <div class="column is-4">
+    <div class="box">
+      <ul>
+        <li>
+          Total winpercent: {{player.winpercent|floatformat}}%
+          <progress class="progress" value="{{player.winpercent}}" max="100">{{player.winpercent|floatformat}}%</progress>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div>
+
+{% endblock %}
