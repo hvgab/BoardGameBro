@@ -2,11 +2,9 @@
 
 {% block content %}
 
-<div class="">
-
 <header class="hero">
   <div class="hero-body">
-    <h1 class="title">{{player.name}}</h1>
+    <h1 class="title">{{ player.name }}</h1>
   </div>
 </header>
 
@@ -31,12 +29,29 @@
   </div>
 </div>
 
+
 <div class="columns">
+  <!-- MOST PLAYED GAME -->
   <div class="column is-4">
     <div class="box">
+      <p class="heading">Most Played Game</p>
+      <p class="title">{{ most_played_game.game.name }}</p>
       <ul>
         <li>
-          Total winpercent: {{player.winpercent|floatformat}}%
+          Winpercent: {{ most_played_game.winrate|floatformat }}%
+          <progress class="progress" value="{{player.winpercent}}" max="100">{{player.winpercent|floatformat}}%</progress>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- MOST PLAYED PLAYER -->
+  <div class="column is-4">
+    <div class="box">
+      <p class="heading">Most Played Player</p>
+      <p class="title">{{ player.get_most_played_player.name }}</p>
+      <ul>
+        <li>
+          Winpercent: {{ most_played_player.winrate|floatformat }}%
           <progress class="progress" value="{{player.winpercent}}" max="100">{{player.winpercent|floatformat}}%</progress>
         </li>
       </ul>
@@ -44,6 +59,13 @@
   </div>
 </div>
 
+<div class="box content">
+  <h1>Last played games</h1>
+  <ul>
+    <li>Lorem</li>
+    <li>Dummy</li>
+    <li>Ipsum</li>
+  </ul>
 </div>
 
 {% endblock %}

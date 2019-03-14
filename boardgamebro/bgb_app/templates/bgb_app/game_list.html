@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load bgb_extras %}
 
 {% block content %}
 
@@ -7,16 +6,16 @@
   <table class="table">
     <thead>
       <tr>
-      {% for field in fields %}
-        <td>{{ field }}</td>
-      {% endfor %}
-    </tr>
+        <td>Name</td>
+        <td>Count Plays</td>
+        <td>Count Players</td>
+      </tr>
     </thead>
     {% for row in object_list %}
     <tr>
-      {% for field in fields %}
-        <td>{{ row|get_attr:field }}</td>
-      {% endfor %}
+      <td><a href="{% url 'bgb:game-detail' pk=row.id %}">{{ row.name }}</a></td>
+      <td>{{ row.play__count }}</td>
+      <td>{{ row.player__count }}</td>
     </tr>
     {% endfor %}
   </table>
