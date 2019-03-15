@@ -27,13 +27,6 @@ class HomeView(TemplateView):
         return context
 
 
-        most_plays_player = Player.objects.all().annotate(
-            count=Count('play')).order_by('-count').first()
-        context['most_plays_player'] = most_plays_player
-
-        return context
-
-
 # PLAYER
 class PlayerListView(ListView):
     model = Player
