@@ -13,4 +13,4 @@ class PlayerAdmin(admin.ModelAdmin):
 
 @admin.register(Play)
 class PlayAdmin(admin.ModelAdmin):
-    list_display = ['id', 'players_string']
+    list_display = ['id', 'game', 'players_string']

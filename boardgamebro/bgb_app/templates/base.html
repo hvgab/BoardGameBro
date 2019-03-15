@@ -6,30 +6,34 @@
     <title>BoardGameBro</title>
   </head>
   <body>
-    <div class="columns">
-      <div class="column is-narrow">
-        <div class="section">
-          <nav class="menu">
-            <a class="menu-item" href="{% url 'bgb:home' %}">Home</a>
-            <p class="menu-label">General</p>
-            <ul class="menu-list">
-              <li><a href="{% url 'bgb:player-list' %}">Players</a></li>
-              <li><a href="{% url 'bgb:game-list' %}">Games</a></li>
-              <li><a href="{% url 'bgb:play-list' %}">Plays</a></li>
-            </ul>
-            <p class="menu-label">Admin</p>
-            <ul class="menu-list">
-              <li><a href="{% url 'admin:index' %}">Admin</a></li>
-            </ul>
-          </nav>
+    {% block toplevelnotification %}
+    <div class="notification">
+      <div class="field is-grouped">
+        <div class="control">
+          <div class="tags has-addons">
+            <span class="tag is-danger">pre-alpha</span>
+            <span class="tag has-background-white">0.0.1</span>
+          </div>
+        </div>
+        <div class="control">
+          This project is in <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-alpha">pre-alpha</a> stage. Please submit your feedback either on <a href="https://github.com/hvgab/BoardGameBro/issues">Github Issues</a> or join the <a href="#">Slack</a>
         </div>
       </div>
+    </div>
+    {% endblock %}
+
+    <!-- </div> -->
+    <div class="columns">
+      <div class="column is-narrow">
+        {% include 'components/menu.html' %}
+      </div>
       <div class="column">
-        <section class="section">
-          {% block content %}
-          {% endblock %}
-        </section>
+        {% block content %}
+        {% endblock %}
       </div>
     </div>
+
+    {% include 'components/footer.html' %}
+
   </body>
 </html>

@@ -9,13 +9,13 @@ class Game(models.Model):
     """A game to be played and/or owned"""
     name = models.CharField(max_length=255)
 
-    # @property
-    # def play_count(self):
-    #     return self.play_set.count()
-    #
-    # @property
-    # def owner_count(self):
-    #     return self.player_set.count()
+    @property
+    def play_count(self):
+        return self.play_set.count()
+
+    @property
+    def player_count(self):
+        return self.player_set.count()
 
     def __str__(self):
         return self.name
@@ -24,7 +24,7 @@ class Game(models.Model):
 class Player(models.Model):
     """Someone who plays games"""
     name = models.CharField(max_length=255)
-    games = models.ManyToManyField(Game)
+    games = models.ManyToManyField(Game, null=True, blank=True)
 
     @cached_property
     def win_count(self):

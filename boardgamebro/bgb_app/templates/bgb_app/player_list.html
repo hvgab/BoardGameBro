@@ -2,10 +2,26 @@
 
 {% block content %}
 
-<section class="section container">
-  <h1>
-    Welcome to BoardGameBro!
-  </h1>
+<section class="section">
+  <h1 class="title is-4">Players</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Win Count</td>
+        <td>Play Count</td>
+        <td>Game Count</td>
+      </tr>
+    </thead>
+    {% for row in object_list %}
+    <tr>
+      <td><a href="{% url 'bgb:game-detail' pk=row.id %}">{{ row.name }}</a></td>
+      <td>{{ row.win_count }}</td>
+      <td>{{ row.play_count }}</td>
+      <td>{{ row.game_count }}</td>
+    </tr>
+    {% endfor %}
+  </table>
 </section>
 
 {% endblock %}

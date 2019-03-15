@@ -3,13 +3,51 @@
 {% block content %}
 
 <section class="section container">
-  <h1>
+  <h1 class="subtitle">
     Welcome to BoardGameBro!
   </h1>
 </section>
 
-<section class="section container">
-  Most Plays: {{ most_plays_player }}
+<section class="section">
+  <div class="columns">
+
+    <div class="column">
+      <div class="card">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+            <figure class="image is-48x48">
+              <img src="https://www.fillmurray.com/96/96" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4">{{ player_most_plays.name }}</p>
+            <p class="subtitle is-6">Most plays (<strong>{{ player_most_plays.play__count }}</strong>)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+            <figure class="image is-48x48">
+              <img src="https://loremflickr.com/96/96" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4">{{ most_played_game.name }}</p>
+            <p class="subtitle is-6">Most played (<strong>{{ most_played_game.play__count }}</strong>)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  </div>
 </section>
 
 {% endblock %}

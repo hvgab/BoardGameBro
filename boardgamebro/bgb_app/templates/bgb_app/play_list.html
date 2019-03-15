@@ -3,9 +3,24 @@
 {% block content %}
 
 <section class="section container">
-  <h1>
-    Welcome to BoardGameBro!
-  </h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <td></td>
+        <td>Game</td>
+        <td>Winner</td>
+        <td>Players</td>
+      </tr>
+    </thead>
+    {% for row in object_list %}
+    <tr>
+      <td><a href="{% url 'bgb:play-detail' pk=row.id %}">{{ row.id }}</a></td>
+      <td>{{ row.game.name }}</td>
+      <td>{{ row.winner.name }}</td>
+      <td>{{ row.players_string }}</td>
+    </tr>
+    {% endfor %}
+  </table>
 </section>
 
 {% endblock %}

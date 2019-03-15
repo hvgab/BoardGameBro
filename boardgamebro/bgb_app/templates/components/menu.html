@@ -1,0 +1,24 @@
+<div class="section">
+  <nav class="menu">
+    <a class="menu-item" href="{% url 'bgb:home' %}">BoardgameBro</a>
+    <p class="menu-label">General</p>
+    <ul class="menu-list">
+      <li><a href="{% url 'bgb:player-list' %}">Players</a></li>
+      <li><a href="{% url 'bgb:game-list' %}">Games</a></li>
+      <li><a href="{% url 'bgb:play-list' %}">Plays</a></li>
+    </ul>
+    <!-- <p class="menu-label">Account</p>
+    <ul class="menu-list">
+      <li><a href="{% url 'admin:index' %}">Sign in</a></li>
+      <li><a href="{% url 'social:begin' 'google-oauth2' %}">Google+</a></li>
+      <li><a href="{% url 'admin:index' %}">Log out</a></li>
+      <li><a href="{% url 'admin:index' %}">Account</a></li>
+      <li><a href="{% url 'admin:index' %}">Profile</a></li>
+      <li><a href="{% url 'admin:index' %}">Friends</a></li>
+    </ul> -->
+    <p class="menu-label">Admin</p>
+    <ul class="menu-list">
+      <li><a href="{% url 'admin:index' %}">Admin</a></li>
+    </ul>
+  </nav>
+</div>
