@@ -27,6 +27,13 @@ class HomeView(TemplateView):
         return context
 
 
+        most_plays_player = Player.objects.all().annotate(
+            count=Count('play')).order_by('-count').first()
+        context['most_plays_player'] = most_plays_player
+
+        return context
+
+
 # PLAYER
 class PlayerListView(ListView):
     model = Player
@@ -48,6 +55,25 @@ class PlayerListView(ListView):
 class PlayerDetailView(DetailView):
     model = Player
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print('context:')
+        print(context)
+        # MOST PLAYED GAME
+        context['most_played_game'] = dict()
+        game = context['object'].get_most_played_game()
+        context['most_played_game']['game'] = game
+        winrate = context['object'].get_winpercent(game)
+        context['most_played_game']['winrate'] = winrate
+        # MOST PLAYED PLAYER
+        context['most_played_player'] = dict()
+        player = context['object'].get_most_played_player()
+        context['most_played_player']['player'] = player
+        winrate = context['object'].get_winpercent(player=player)
+        context['most_played_player']['winrate'] = winrate
+
+        return context
+
 
 # GAME
 class GameListView(ListView):
@@ -61,6 +87,15 @@ class GameListView(ListView):
     #         field.name for field in self.model._meta.get_fields()
     #     ]
     #     return context
+
+    def get_queryset(self):
+        queryset = Game.objects.annotate(
+            Count('play', distinct=True)).annotate(
+                Count('player', distinct=True)).all()
+
+        # for row in queryset:
+        #     print(row.__dict__)
+        return queryset
 
 
 class GameDetailView(DetailView):
