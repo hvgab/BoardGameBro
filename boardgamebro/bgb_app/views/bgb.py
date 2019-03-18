@@ -1,8 +1,8 @@
 from django.views.generic import ListView, DetailView, FormView, TemplateView, CreateView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .models import Player, Play, Game
-from .forms import PlayForm
+from ..models import Player, Play, Game
+from ..forms import PlayForm
 from django.db.models import Count, Q
 
 
@@ -47,17 +47,20 @@ class PlayerListView(ListView):
 
 class PlayerDetailView(DetailView):
     model = Player
+    template_name = 'bgb_app/player_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print('context:')
         print(context)
+
         # MOST PLAYED GAME
         context['most_played_game'] = dict()
         game = context['object'].get_most_played_game()
         context['most_played_game']['game'] = game
         winrate = context['object'].get_winpercent(game)
         context['most_played_game']['winrate'] = winrate
+
         # MOST PLAYED PLAYER
         context['most_played_player'] = dict()
         player = context['object'].get_most_played_player()
@@ -133,24 +136,3 @@ class PlayDetailView(DetailView):
 class PlayCreateView(CreateView):
     model = Play
     fields = '__all__'
-
-
-# def add_play(request):
-#     if request.method == 'POST':
-#         form = PlayForm(request.POST)
-#         if form.is_valid():
-#             messages.success('Play added!')
-#             return redirect(add_play)
-#
-#     else:
-#         form = PlayForm()
-#
-#     return render(request, 'add_play.html', {'form': form})
-
-# def player(request, pk):
-#     player = get_object_or_404(Player, id=pk)
-#     winrate = player.get_winrate()
-#     return render(
-#         request,
-#         'player.html',
-#         context=dict(player=player, winrate=winrate, winpercent=winrate * 100))

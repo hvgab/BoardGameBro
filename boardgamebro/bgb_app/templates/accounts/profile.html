@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="section">
+  <h1 class="title is-4">{{ user.username }}</h1>
+</section>
+
+<div class="section">
+<p>You are the accountholder of:</p>
+<ul>
+  {% for player in request.user.player_set.all %}
+  <li>{{ player.nickname }}</li>
+  {% endfor %}
+</ul>
+{% if request.user.player_set.all|length > 1 %}
+You should probably <a>merge</a> these users.
+{% endif %}
+</div>
+
+<div class="section">
+
+<p>You have connected to:</p>
+<ul>
+  {% for userauth in request.user.social_auth.all %}
+  <li>{{ userauth.provider }}</li>
+  {% endfor %}
+</ul>
+</div>
+
+{% endblock %}

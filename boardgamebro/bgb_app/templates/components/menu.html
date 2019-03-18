@@ -7,18 +7,26 @@
       <li><a href="{% url 'bgb:game-list' %}">Games</a></li>
       <li><a href="{% url 'bgb:play-list' %}">Plays</a></li>
     </ul>
-    <!-- <p class="menu-label">Account</p>
+    {% if request.user.is_authenticated %}
+    <p class="menu-label">{{ request.user.username }}</p>
     <ul class="menu-list">
-      <li><a href="{% url 'admin:index' %}">Sign in</a></li>
-      <li><a href="{% url 'social:begin' 'google-oauth2' %}">Google+</a></li>
-      <li><a href="{% url 'admin:index' %}">Log out</a></li>
-      <li><a href="{% url 'admin:index' %}">Account</a></li>
-      <li><a href="{% url 'admin:index' %}">Profile</a></li>
-      <li><a href="{% url 'admin:index' %}">Friends</a></li>
-    </ul> -->
+      <li><del><a href="{% url 'admin:index' %}">Friends</a></del></li>
+      <li><a href="{% url 'bgb:profile' %}">Profile</a></li>
+      <li><a href="{% url 'logout' %}">Log out</a></li>
+    </ul>
+    {% if request.user.is_staff %}
     <p class="menu-label">Admin</p>
     <ul class="menu-list">
       <li><a href="{% url 'admin:index' %}">Admin</a></li>
     </ul>
+    {% endif %}
+    {% else %}
+    <p class="menu-label">Account</p>
+    <ul class="menu-list">
+      <li><a href="{% url 'login' %}">Sign in</a></li>
+      <li><del><a href="{% url 'login' %}">Register</a></del></li>
+    </ul>
+    {% endif %}
+
   </nav>
 </div>

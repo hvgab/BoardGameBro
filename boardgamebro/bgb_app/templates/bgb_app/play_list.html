@@ -2,7 +2,8 @@
 
 {% block content %}
 
-<section class="section container">
+<section class="section">
+  <h1 class="title is-4">Plays</h1>
   <table class="table">
     <thead>
       <tr>
@@ -15,9 +16,14 @@
     {% for row in object_list %}
     <tr>
       <td><a href="{% url 'bgb:play-detail' pk=row.id %}">{{ row.id }}</a></td>
-      <td>{{ row.game.name }}</td>
-      <td>{{ row.winner.name }}</td>
-      <td>{{ row.players_string }}</td>
+      <td><a href="{% url 'bgb:game-detail' pk=row.game.id %}">{{ row.game.name }}</a></td>
+      <td><a href="{% url 'bgb:player-detail' pk=row.winner.id %}">{{ row.winner.nickname }}</a></td>
+      <!-- <td>{{ row.players_string }}</td> -->
+      <td>
+        {% for player in row.players.all %}
+          <a href="{% url 'bgb:player-detail' pk=player.id %}">{{ player.nickname }}</a>
+        {% endfor %}
+      </td>
     </tr>
     {% endfor %}
   </table>

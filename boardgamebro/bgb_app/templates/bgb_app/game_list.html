@@ -2,11 +2,12 @@
 
 {% block content %}
 
-<section class="section container">
+<section class="section">
   <h1 class="title is-4">Games</h1>
   <table class="table">
     <thead>
       <tr>
+        <td></td>
         <td>Name</td>
         <td>Count Plays</td>
         <td>Count Players</td>
@@ -14,6 +15,7 @@
     </thead>
     {% for row in object_list %}
     <tr>
+      <td><a href="{% url 'bgb:game-detail' pk=row.id %}">{{ row.id }}</a></td>
       <td><a href="{% url 'bgb:game-detail' pk=row.id %}">{{ row.name }}</a></td>
       <td>{{ row.play_count }}</td>
       <td>{{ row.player_count }}</td>

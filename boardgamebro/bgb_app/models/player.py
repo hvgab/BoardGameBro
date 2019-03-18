@@ -2,29 +2,21 @@ from django.db import models
 from django.db.models import Count
 from django.utils.functional import cached_property
 from django.utils import timezone
-
-
-# Create your models here.
-class Game(models.Model):
-    """A game to be played and/or owned"""
-    name = models.CharField(max_length=255)
-
-    @property
-    def play_count(self):
-        return self.play_set.count()
-
-    @property
-    def player_count(self):
-        return self.player_set.count()
-
-    def __str__(self):
-        return self.name
+from .game import Game
+from django.contrib.auth.models import User
 
 
 class Player(models.Model):
     """Someone who plays games"""
-    name = models.CharField(max_length=255)
-    games = models.ManyToManyField(Game, null=True, blank=True)
+    created_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name='creator_of')
+    is_deleted = models.BooleanField(
+        default=False, verbose_name='player is deleted')
+    deleted_at = models.DateTimeField(verbose_name='player was deleted at')
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True)
+    nickname = models.CharField(max_length=255)
+    games = models.ManyToManyField(Game, blank=True)
 
     @cached_property
     def win_count(self):
@@ -83,6 +75,7 @@ class Player(models.Model):
         # etc
 
     def get_most_played_player(self):
+        from .play import Play
         my_plays = self.play_set.all()
         my_plays_ids = [x.id for x in my_plays]
 
@@ -95,38 +88,7 @@ class Player(models.Model):
         return opponent
 
     def __str__(self):
-        return self.name
+        return self.nickname
 
     def __repr__(self):
-        return f'Player({self.name})'
-
-
-class Play(models.Model):
-    """Players have played a game"""
-    name = models.CharField(max_length=50, null=True, blank=True)
-    description = models.TextField(max_length=250, null=True, blank=True)
-    date = models.DateField(
-        default=timezone.now, help_text='When was the game played?')
-    game = models.ForeignKey(
-        Game,
-        on_delete=models.SET_NULL,
-        null=True,
-        help_text='What game was played?')
-    players = models.ManyToManyField(Player, help_text='Who was playing?')
-    winner = models.ForeignKey(
-        Player, on_delete=models.SET_NULL, null=True, related_name='winner')
-
-    @property
-    def players_string(self):
-        return ', '.join(p.name for p in self.players.all())
-
-    def __str__(self):
-        return f'[{self.date}] {self.game} -> {self.winner}'
-
-
-class Score(models.Model):
-    """Record the score of a *play*. Either one for the final score, or one for each round."""
-    play = models.ForeignKey(Play, on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.PROTECT)
-    round = models.IntegerField()
-    score = models.IntegerField()
+        return f'Player({self.nickname})'

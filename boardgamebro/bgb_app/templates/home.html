@@ -21,7 +21,7 @@
             </figure>
           </div>
           <div class="media-content">
-            <p class="title is-4">{{ player_most_plays.name }}</p>
+            <p class="title is-4">{{ player_most_plays.nickname }}</p>
             <p class="subtitle is-6">Most plays (<strong>{{ player_most_plays.play__count }}</strong>)</p>
           </div>
         </div>
@@ -49,5 +49,7 @@
 
   </div>
 </section>
+
+{% include 'components/login.html' %}
 
 {% endblock %}
