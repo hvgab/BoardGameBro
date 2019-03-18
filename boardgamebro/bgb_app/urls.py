@@ -16,7 +16,7 @@ urlpatterns = [
     ## PLAY
     path('plays/', PlayListView.as_view(), name='play-list'),
     path('plays/<int:pk>/', PlayDetailView.as_view(), name='play-detail'),
-    path('plays/new', PlayCreateView.as_view(), name='play-new'),
+    path('plays/create', PlayCreateView.as_view(), name='play-create'),
     ## GAME
     path('games/', GameListView.as_view(), name='game-list'),
     path('games/<int:pk>/', GameDetailView.as_view(), name='game-detail'),
