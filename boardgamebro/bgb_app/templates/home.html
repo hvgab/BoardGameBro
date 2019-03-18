@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 
+{% block pageheader %}
+<div class="hero">
+  <div class="hero-body">
+    <h1 class="title">
+      BoardgameBro.party
+    </h1>
+    <h2 class="subtitle">
+      Welcome to BoardGameBro!
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+
 {% block content %}
-
-<section class="section container">
-  <h1 class="subtitle">
-    Welcome to BoardGameBro!
-  </h1>
-</section>
-
 <section class="section">
   <div class="columns">
 
@@ -50,6 +57,6 @@
   </div>
 </section>
 
-{% include 'components/login.html' %}
+{# include 'components/login.html' #}
 
 {% endblock %}

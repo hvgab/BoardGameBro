@@ -1,0 +1,39 @@
+{% block head %}
+{% endblock %}
+<!-- <section class="section"> -->
+  <div class="notification">
+    <!-- <div class="hero-body"> -->
+      <!-- <div class="container"> -->
+        <div class="columns">
+          <div class="column has-text-centered">
+            <header>
+              <span class="title">Join us!</span>
+              <span class="subtitle">Log in with:</span>
+            </header>
+          </div>
+
+          <div class="column has-text-centered">
+            <a class="button is-info" href="{% url 'social:begin' 'discord' %}">
+              <img src="https://img.icons8.com/dusk/64/000000/discord-logo.png">
+              Sign in with Discord
+            </a>
+          </div>
+          <div class="column has-text-centered">
+            <a class="button is-dark" href="{% url 'social:begin' 'reddit' %}">
+              <img src="https://img.icons8.com/dusk/64/000000/reddit.png">
+              Sign in with Reddit
+            </a>
+          </div>
+          <div class="column has-text-centered">
+            <a class="button is-danger" href="{% url 'social:begin' 'google-oauth2' %}">
+              <img src="https://img.icons8.com/dusk/64/000000/google-logo.png">
+              Sign in with Google
+            </a>
+          </div>
+        </div>
+      </div>
+        <!-- </div> -->
+      </div>
+    <!-- </div> -->
+  </div>
+<!-- </section> -->
