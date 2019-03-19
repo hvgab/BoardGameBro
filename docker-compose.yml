@@ -1,11 +1,35 @@
-version: '3'
+version: '3.1'
 
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000
     # command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    # deploy:
+    #   replicas: 2
+    #   restart_policy:
+    #     condition: on-failure
+    #   resources:
+    #     cpus: "0.2"
+    #     memory: 100M
     ports:
       - "8000:8000"
-    # volumes:
-      # - .:/code
+    # networks:
+      # - webnet
+    volumes:
+      - .:/code
+
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_PASSWORD: my_super_secret_password
+  #
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+#
+# networks:
+#   webnet:
