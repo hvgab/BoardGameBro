@@ -1,27 +1,18 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="{% static '/css/app.css' %}"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css">
     <title>BoardGameBro</title>
   </head>
   <body>
-    
+
     {% block toplevelnotification %}
-    <div class="notification">
-      <div class="field is-grouped">
-        <div class="control">
-          <div class="tags has-addons">
-            <span class="tag is-danger">pre-alpha</span>
-            <span class="tag has-background-white">0.0.1</span>
-          </div>
-        </div>
-        <div class="control">
-          This project is in <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle#Pre-alpha">pre-alpha</a> stage. Please submit your feedback either on <a href="https://github.com/hvgab/BoardGameBro/issues">Github Issues</a> or join the <a href="#">Slack</a>
-        </div>
-      </div>
-    </div>
+    {% include 'components/version_banner.html' %}
     {% endblock %}
 
     <!-- </div> -->
@@ -30,6 +21,13 @@
         {% include 'components/menu.html' %}
       </div>
       <div class="column">
+        {% block pageheader %}
+        {% endblock %}
+
+        {% if not request.user.is_authenticated %}
+        {% include 'components/login-action-level.html' %}
+        {% endif %}
+
         {% block content %}
         {% endblock %}
       </div>

@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 class Player(models.Model):
     """Someone who plays games"""
+    # PROFILE STUFF
     created_by = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, related_name='creator_of')
     is_deleted = models.BooleanField(
@@ -15,6 +16,11 @@ class Player(models.Model):
     deleted_at = models.DateTimeField(verbose_name='player was deleted at')
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True)
+    email_communication = models.BooleanField(
+        default=True,
+        verbose_name='Would you like to get awesome news from us?')
+
+    # PLAYER STUFF
     nickname = models.CharField(max_length=255)
     games = models.ManyToManyField(Game, blank=True)
 
