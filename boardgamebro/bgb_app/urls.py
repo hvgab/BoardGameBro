@@ -6,9 +6,7 @@ app_name = 'bgb'
 urlpatterns = [
     # BGB APP
     path('', HomeView.as_view(), name='home'),
-    path('about/', HomeView.as_view(), name='home'),
-    path('about/tos', HomeView.as_view(), name='home'),
-    path('about/privacy', HomeView.as_view(), name='home'),
+    path('about/', About.as_view(), name='about'),
 
     # ACCOUNT
     path('accounts/profile/', Profile.as_view(), name='profile'),
