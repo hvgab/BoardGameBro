@@ -160,10 +160,8 @@ AUTH_PASSWORD_VALIDATORS = [
 SOCIAL_AUTH_REDDIT_KEY = os.getenv('SOCIAL_AUTH_REDDIT_KEY')
 SOCIAL_AUTH_REDDIT_SECRET = os.getenv('SOCIAL_AUTH_REDDIT_SECRET')
 SOCIAL_AUTH_REDDIT_AUTH_EXTRA_ARGUMENTS = {
-    'duration':
-    'permanent',
-    'redirect_uri':
-    'http://dev.boardgamebro.party:8000/accounts/social/complete/reddit/'
+    'duration': 'permanent',
+    'redirect_uri': os.getenv('REDDIT_REDIRECT')
 }
 
 # # Google OAuth2 (google-oauth2)
@@ -171,14 +169,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv(
     'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
-    'redirect_uri':
-    'http://dev.boardgamebro.party:8000/accounts/social/complete/google-oauth2/'
+    'redirect_uri': os.getenv('GOOGLE_REDIRECT')
 }
 SOCIAL_AUTH_DISCORD_KEY = os.getenv('SOCIAL_AUTH_DISCORD_KEY')
 SOCIAL_AUTH_DISCORD_SECRET = os.getenv('SOCIAL_AUTH_DISCORD_SECRET')
 SOCIAL_AUTH_DISCORD_AUTH_EXTRA_ARGUMENTS = {
-    'redirect_uri':
-    'http://dev.boardgamebro.party:8000/accounts/social/complete/discord/'
+    'redirect_uri': os.getenv('DISCORD_REDIRECT')
 }
 SOCIAL_AUTH_DISCORD_SCOPE = ['email']
 
