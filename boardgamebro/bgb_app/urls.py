@@ -4,11 +4,15 @@ from .views import *
 app_name = 'bgb'
 
 urlpatterns = [
+    # BGB APP
+    path('', HomeView.as_view(), name='home'),
+    path('about/', HomeView.as_view(), name='home'),
+    path('about/tos', HomeView.as_view(), name='home'),
+    path('about/privacy', HomeView.as_view(), name='home'),
+
     # ACCOUNT
     path('accounts/profile/', Profile.as_view(), name='profile'),
 
-    # BGB APP
-    path('', HomeView.as_view(), name='home'),
     ## PLAYER
     path('players/', PlayerListView.as_view(), name='player-list'),
     path(
