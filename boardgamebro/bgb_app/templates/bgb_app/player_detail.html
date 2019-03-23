@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% block pageheader %}
+  {% with header=player.name %}
+    {% include 'components/page-header.html' %}
+  {% endwith %}
+{% endblock %}
+
 {% block content %}
 
 <header class="hero">

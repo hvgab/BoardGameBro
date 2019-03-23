@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load bgb_extras %}
 
+{% block pageheader %}
+  {% with header='Games' %}
+    {% include 'components/page-header.html' %}
+  {% endwith %}
+{% endblock %}
+
 {% block content %}
 
 <section class="section container">

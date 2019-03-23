@@ -23,15 +23,22 @@
       </div>
       <div class="column">
         {% block pageheader %}
+        <div class="hero">
+          <div class="hero-body">
+            <h1 class="title">
+              BoardgameBro.party
+            </h1>
+            <h2 class="subtitle">
+              Welcome to BoardGameBro!
+            </h2>
+          </div>
+        </div>
         {% endblock %}
-
-        {% if not request.user.is_authenticated %}
-        {% include 'components/login-action-level.html' %}
-        {% endif %}
 
         {% block content %}
         {% endblock %}
       </div>
+
     </div>
 
     {% include 'components/footer.html' %}

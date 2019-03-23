@@ -10,5 +10,11 @@ An app to keep track of who wins when you're playing boardgames.
 -   Which games do you and your friends own?
 
 # Icons
-- https://icons8.com/icon/pack/gaming/dusk
-- https://www.flaticon.com/packs/games-10
+-   [icons8](https://icons8.com/icon/pack/gaming/dusk)
+-   [flaticon](https://www.flaticon.com/packs/games-10)
+
+# About
+This project tries it best to follow
+-   [git flow](https://jeffkreeftmeijer.com/git-flow/)
+-   [semver](https://semver.org/)
+-   [keepachangelog](https://keepachangelog.com/en/0.3.0/)

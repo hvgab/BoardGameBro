@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block pageheader %}
+  {% with header='Games' %}
+    {% include 'components/page-header.html' %}
+  {% endwith %}
+{% endblock %}
 
-<section class="section">
-  <h1 class="title is-4">Games</h1>
+{% block content %}
+<section class="">
   <table class="table">
     <thead>
       <tr>

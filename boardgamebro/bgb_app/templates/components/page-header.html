@@ -1,0 +1,40 @@
+{% block pageheader %}
+<div class="hero">
+  <div class="hero-body">
+    <div class="columns is-vcentered">
+      <div class="column">
+        <h1 class="title">
+          {{header|default:"BoardgameBro"}}
+        </h1>
+        <h2 class="subtitle">
+          {{subtitle|default:"Welcome to BoardGameBro!"}}
+        </h2>
+      </div>
+      <div class="column is-8">
+        <div class="columns is-vcentered">
+          <div class="column is-narrow">
+            <h1 class="title">Join us!</h1>
+          </div>
+
+          <div class="column">
+            <a class="button is-info" href="{% url 'social:begin' 'discord' %}">
+              <span class="icon"><i class="fab fa-discord"></i></span>
+              <span>Sign in</span>
+            </a>
+
+            <a class="button is-dark" href="{% url 'social:begin' 'reddit' %}">
+              <span class="icon"><i class="fab fa-reddit"></i></span>
+              <span>Sign in</span>
+            </a>
+
+            <a class="button is-danger" href="{% url 'social:begin' 'google-oauth2' %}">
+              <span class="icon"><i class="fab fa-google"></i></span>
+              <span>Sign in</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
