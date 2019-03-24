@@ -5,15 +5,24 @@ from django.utils import timezone
 from .game import Game
 from django.contrib.auth.models import User
 
+# class Friendship(models.Model):
+#     player = models.ForeignKey(
+#         'Player', on_delete=models.CASCADE, related_name='player')
+#     friend = models.ForeignKey(
+#         'Player', on_delete=models.CASCADE, related_name='friend')
+#     friends_since = models.DateTimeField(verbose_name='Became friends at')
+
 
 class Player(models.Model):
     """Someone who plays games"""
     # PROFILE STUFF
+    created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, related_name='creator_of')
     is_deleted = models.BooleanField(
         default=False, verbose_name='player is deleted')
-    deleted_at = models.DateTimeField(verbose_name='player was deleted at')
+    deleted_at = models.DateTimeField(
+        verbose_name='player was deleted at', null=True, blank=True)
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True)
     email_communication = models.BooleanField(
@@ -23,6 +32,7 @@ class Player(models.Model):
     # PLAYER STUFF
     nickname = models.CharField(max_length=255)
     games = models.ManyToManyField(Game, blank=True)
+    friends = models.ManyToManyField('self', blank=True)
 
     @cached_property
     def win_count(self):

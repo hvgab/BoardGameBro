@@ -17,6 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.contrib.auth import views as auth_views
+from rest_framework import routers
+from bgb_app.views import api as api_views
+
+api_router = routers.DefaultRouter()
+api_router.register(r'players', api_views.PlayerViewSet)
+api_router.register(r'users', api_views.UserViewSet)
 
 urlpatterns = [
     # APP
@@ -27,6 +33,9 @@ urlpatterns = [
     path('accounts/social/', include('social_django.urls'), name='social'),
     # ADMIN
     path('admin/', admin.site.urls),
+    # API
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include(api_router.urls)),
 ]
 
 if settings.DEBUG:

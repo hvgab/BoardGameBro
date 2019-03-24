@@ -1,7 +1,11 @@
 from django.urls import path
 from .views import *
+from .views import api as api_views
 
 app_name = 'bgb'
+
+# api_router = routers.DefaultRouter()
+# api_router.register(r'player', api_views.PlayerViewSet)
 
 urlpatterns = [
     # BGB APP

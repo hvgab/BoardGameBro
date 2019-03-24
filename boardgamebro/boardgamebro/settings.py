@@ -36,8 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'social_django',
+    'rest_framework',
     'bgb_app',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':
+    ['rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly']
+}
 
 INTERNAL_IPS = os.getenv('INTERNAL_IPS')
 
