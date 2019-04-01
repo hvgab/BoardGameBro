@@ -18,12 +18,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', 'developer-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', True)
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ['*'])
 
 # Application definition
 
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'bgb_app',
 ]
 
-INTERNAL_IPS = os.getenv('INTERNAL_IPS')
+INTERNAL_IPS = os.getenv('INTERNAL_IPS', '127.0.0.1')
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -130,8 +130,12 @@ WSGI_APPLICATION = 'boardgamebro.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': (os.getenv('POSTGRES_USER', 'developer-user'),
+        'PASSWORD': (os.getenv('POSTGRES_PASSWORD', 'developer-password'),
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
