@@ -21,3 +21,4 @@ uwsgi
 djangorestframework
 markdown
 coreapi
+drf-yasg

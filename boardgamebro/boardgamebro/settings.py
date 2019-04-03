@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'social_django',
     'bgb_app',
     'rest_framework',
+    'drf_yasg',
 ]
 
 REST_FRAMEWORK = {
