@@ -18,3 +18,7 @@ sqlparse==0.3.0
 urllib3==1.24.1
 psycopg2
 uwsgi
+djangorestframework
+markdown
+coreapi
+drf-yasg
