@@ -4,6 +4,8 @@ from .views import *
 app_name = 'bgb'
 
 urlpatterns = [
+    path('session_form', SessionForm.as_view(), name='session-form'),
+
     # BGB APP
     path('', HomeView.as_view(), name='home'),
     path('about/', About.as_view(), name='about'),

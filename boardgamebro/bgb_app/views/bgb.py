@@ -6,6 +6,10 @@ from ..forms import PlayForm
 from django.db.models import Count, Q
 
 
+class SessionForm(TemplateView):
+    template_name = 'session_form.html'
+
+
 class HomeView(TemplateView):
     template_name = 'home.html'
 
