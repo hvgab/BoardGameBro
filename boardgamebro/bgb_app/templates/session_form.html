@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script> -->
+<!-- <script src="https://unpkg.com/vue/"></script> -->
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<script src="https://unpkg.com/lodash"></script>
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/luxon@1.12.0/build/global/luxon.min.js">
+
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- dj content -->
+<div id="app" class="section">
+
+  <div class="">
+    <p>selectedGame: << selectedGame >></p>
+    <p>gameSearch: << gameSearch >></p>
+    <p>filteredGameOptions: << filteredGameOptions >></p>
+    <b-field label="Game">
+      <b-autocomplete
+      v-model="gameSearch"
+      placeholder="e.g. Ludo"
+      :open-on-focus=true
+      :data="filteredGameOptions"
+      field="name"
+      @select="option => {selectedGame = option, session.game = option.id}"
+      >
+      </b-autocomplete>
+    </b-field>
+  </div>
+
+  <div class="">
+    <b-field label="Session Date">
+      <b-datepicker v-model="sessionDate"
+        placeholder="Click to select"
+        icon="calendar-today"
+        :date-creator="() => new Date()"
+        :date-formatter="(date) => isoDateFormatter(date)"
+        :date-parser="(date) => new Date(Date.parse(date))"
+
+        >
+      </b-datepicker>
+    </b-field>
+  </div>
+
+  <div class="">
+    <b-field label="Players">
+      <b-taginput
+        v-model="players"
+        :data="filteredFriends"
+        autocomplete
+        field="nickname"
+        placeholder="Add a friend"
+        @typing="getFilteredFriends">
+      </b-taginput>
+    </b-field>
+    <!-- <pre><b>players:</b><< players >></pre> -->
+  </div>
+
+
+  <button v-if="!sessionIsSubmitted" class="button is-success" type="button" name="button" v-on:click="postSession">Submit</button>
+  <button v-if="sessionIsSubmitted" class="button is-info"type="button" name="button" v-on:click="postSession">Update</button>
+
+
+  <!-- Based on this.scores -->
+  <div class="section">
+    <table v-if="sessionIsSubmitted" class="table">
+      <thead>
+        <tr>
+          <th>Round</th>
+          <th v-for="player in players" :key="player.id"><small><< player.id >></small> << player.nickname >></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row, rowIndex in scores">
+          <td><< rowIndex+1 >></td>
+          <td v-for="col, colIndex in row">
+            <!-- << col >> -->
+            <b-input
+              v-model="scores[rowIndex][colIndex].object.score"
+              type="number"
+              @input="postScore(scores[rowIndex][colIndex].object)"
+            >
+            </b-input>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <pre>players: << players >></pre>
+  <br>
+  <pre>session: << session >></pre>
+  <br>
+  <pre>scores: << scores >></pre>
+
+</div>
+
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    data: {
+      luxon: luxon,
+      csrftoken: null,
+      gameOptions: [],
+      gameSearch: '',
+      selectedGame: {},
+      friends: [],
+      filteredFriends: [],
+      players: [],
+      rounds: 5,
+      sessionDate: null,
+      session: {
+        name: '',
+        description: '',
+        date: null,
+        game: null,
+        winner: null,
+        players: [],
+      },
+      sessionIsSubmitted: false,
+      sessionResponse: null,
+      scores: []
+    },
+    mounted: function () {
+      this.getGameOptions()
+      this.getFriends()
+      this.csrftoken = Cookies.get('csrftoken')
+    },
+    watch: {
+      players: function (val) {
+        this.session.players = val.map(function(x){return x.id})
+      },
+      sessionDate: function(val){
+        this.session.date = this.isoDateFormatter(val)
+      }
+    },
+    computed: {
+      filteredGameOptions() {
+        return this.gameOptions.filter((option) => {
+          return option.name
+            .toString()
+            .toLowerCase()
+            .indexOf(this.gameSearch.toLowerCase()) >= 0
+        })
+      },
+      roundslist() {
+        return _.range(1, this.rounds+1)
+      }
+    },
+    methods: {
+      isoDateFormatter: function(date){
+        return date.toJSON().slice(0,10)
+      },
+      postSession: function(){
+        var config = {headers: {'X-CSRFToken':this.csrftoken}}
+        axios.post('http://dev.boardgamebro.party:8000/api/plays/', this.session, config)
+          .then((response) => {
+            this.sessionIsSubmitted = true
+            this.session = response.data
+            this.createScoreObjects()
+            console.log(response)
+          })
+          .catch(function(error){
+            console.log(error)
+          })
+      },
+      postScore: _.debounce(function(object){
+        var config = {headers: {'X-CSRFToken':this.csrftoken}}
+        object.score = parseInt(object.score)
+        console.log(object)
+        axios.post('http://dev.boardgamebro.party:8000/api/scores/', object, config)
+          .then((response) => {
+            console.log(response)
+            object = response.data
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }, 1500),
+      createScoreObjects: function() {
+
+        scores = []
+        for (let round of this.roundslist) {
+          roundlist = []
+          for (let player of this.players) {
+            roundlist.push({
+              object: {
+                round: round,
+                score:null,
+                play: this.session.id || null,  // TODO this might change to session, gamesession or playsession
+                player:player.id,
+              },
+              isSubmitted:false
+            })
+
+          }
+          scores.push(roundlist)
+        }
+        this.scores = scores
+
+
+      },
+      getFilteredFriends(text) {
+        this.filteredFriends = this.friends.filter((option) => {
+          return option.nickname
+            .toString()
+            .toLowerCase()
+            .indexOf(text.toLowerCase()) >= 0
+        })
+      },
+      getGameOptions: function() {
+        var vm = this
+        axios.get('http://dev.boardgamebro.party:8000/api/games/')
+          .then(function (response) {
+            vm.gameOptions = response.data
+          })
+          .catch(function (error) {
+            vm.gameOptions = 'FEIL! ' + error
+          })
+      },
+      getFriends: function() {
+        var vm = this
+        axios.get('http://dev.boardgamebro.party:8000/api/players/')
+          .then(function (response) {
+            vm.friends = response.data
+            vm.filteredFriends = vm.friends
+          })
+          .catch(function (error) {
+            vm.friends = 'FEIL! ' + error
+            vm.filteredFriends = 'FEIL! ' + error
+          })
+      }
+
+    },
+    delimiters: ["<<", ">>"]
+  })
+</script>
+{% endblock %}
