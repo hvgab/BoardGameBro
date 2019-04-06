@@ -10,19 +10,22 @@
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/luxon@1.12.0/build/global/luxon.min.js">
 
 </script>
 {% endblock %}
 
 {% block content %}
-<!-- dj content -->
 <div id="app" class="section">
 
   <div class="">
-    <p>selectedGame: << selectedGame >></p>
-    <p>gameSearch: << gameSearch >></p>
-    <p>filteredGameOptions: << filteredGameOptions >></p>
+    <b-field label="Title">
+      <b-input v-model="session.name">
+      </b-input>
+    </b-field>
+  </div>
+
+  <!-- GAME CHOOSER -->
+  <div class="">
     <b-field label="Game">
       <b-autocomplete
       v-model="gameSearch"
@@ -36,6 +39,7 @@
     </b-field>
   </div>
 
+  <!-- DATE PICKER -->
   <div class="">
     <b-field label="Session Date">
       <b-datepicker v-model="sessionDate"
@@ -44,12 +48,12 @@
         :date-creator="() => new Date()"
         :date-formatter="(date) => isoDateFormatter(date)"
         :date-parser="(date) => new Date(Date.parse(date))"
-
         >
       </b-datepicker>
     </b-field>
   </div>
 
+  <!-- PLAYERS -->
   <div class="">
     <b-field label="Players">
       <b-taginput
@@ -61,15 +65,15 @@
         @typing="getFilteredFriends">
       </b-taginput>
     </b-field>
-    <!-- <pre><b>players:</b><< players >></pre> -->
   </div>
 
+  <!-- BUTTONS -->
+  <div class="">
+    <button v-if="!sessionIsSubmitted" class="button is-success" type="button" name="button" v-on:click="postSession">Submit</button>
+    <button v-if="sessionIsSubmitted" class="button is-info"type="button" name="button" v-on:click="postSession">Update</button>
+  </div>
 
-  <button v-if="!sessionIsSubmitted" class="button is-success" type="button" name="button" v-on:click="postSession">Submit</button>
-  <button v-if="sessionIsSubmitted" class="button is-info"type="button" name="button" v-on:click="postSession">Update</button>
-
-
-  <!-- Based on this.scores -->
+  <!-- SCORES -->
   <div class="section">
     <table v-if="sessionIsSubmitted" class="table">
       <thead>
@@ -92,15 +96,35 @@
           </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <th>Final Score</th>
+          <th v-for="player in players" :key="player.id"><< player.final_score >></th>
+        </tr>
+      </tfoot>
     </table>
   </div>
 
-
-  <pre>players: << players >></pre>
-  <br>
-  <pre>session: << session >></pre>
-  <br>
-  <pre>scores: << scores >></pre>
+  <section id="debug">
+    <b-collapse :open="false" aria-id="contentIdForA11y1">
+      <button
+          class="button is-primary"
+          slot="trigger"
+          aria-controls="contentIdForA11y1">Click me!</button>
+      <div class="notification">
+        <div class="content">
+          <p>selectedGame: << selectedGame >></p>
+          <p>gameSearch: << gameSearch >></p>
+          <p>filteredGameOptions: << filteredGameOptions >></p>
+          <pre>players: << players >></pre>
+          <br>
+          <pre>session: << session >></pre>
+          <br>
+          <pre>scores: << scores >></pre>
+        </div>
+      </div>
+    </b-collapse>
+  </section>
 
 </div>
 
@@ -108,7 +132,6 @@
   var app = new Vue({
     el: '#app',
     data: {
-      luxon: luxon,
       csrftoken: null,
       gameOptions: [],
       gameSearch: '',
@@ -139,9 +162,8 @@
       players: function (val) {
         this.session.players = val.map(function(x){return x.id})
       },
-      sessionDate: function(val){
-        this.session.date = this.isoDateFormatter(val)
-      }
+      sessionDate: function(val){ this.session.date = this.isoDateFormatter(val) },
+      scores: function (val) { this.updateTotalScores() },
     },
     computed: {
       filteredGameOptions() {
@@ -154,9 +176,44 @@
       },
       roundslist() {
         return _.range(1, this.rounds+1)
-      }
+      },
     },
     methods: {
+      updateTotalScores() {
+        console.log('updateTotalScores')
+        final_scores = []
+        for (rowIndex in this.scores) {
+          for (cellIndex in this.scores[rowIndex]) {
+            console.log('cell: ')
+            console.log(this.scores[rowIndex][cellIndex])
+            for (playerIndex in this.players) {
+              console.log('score.player:' + this.scores[rowIndex][cellIndex].object.player)
+              console.log(this.scores[rowIndex][cellIndex].object.player == this.players[playerIndex].id)
+              if (this.scores[rowIndex][cellIndex].object.player == this.players[playerIndex].id) {
+                // if (!this.players[playerIndex].final_score) {
+                if (rowIndex == 0) {
+                  this.players[playerIndex].final_score = 0
+                }
+                if(typeof this.scores[rowIndex][cellIndex].object.score === 'number'){
+                  this.players[playerIndex].final_score += this.scores[rowIndex][cellIndex].object.score
+                }
+                console.log('player.final_score')
+                console.log(this.players[playerIndex].final_score)
+                console.log('score score:')
+                console.log(this.scores[rowIndex][cellIndex].object.score)
+              }
+            }
+          }
+        }
+      },
+      getSessionPlayerScore: function() {
+        // EH, maybe add "total score" to session on API? computed readonly?
+        // SELECT player_id, SUM("score")
+        // FROM "bgb_app_score"
+        // WHERE "play_id" = '23'
+        // GROUP BY player_id
+        // LIMIT 50
+      },
       isoDateFormatter: function(date){
         return date.toJSON().slice(0,10)
       },
@@ -171,6 +228,7 @@
           })
           .catch(function(error){
             console.log(error)
+            console.log(error.data)
           })
       },
       postScore: _.debounce(function(object){
@@ -181,6 +239,7 @@
           .then((response) => {
             console.log(response)
             object = response.data
+            this.updateTotalScores()
           })
           .catch(function (error) {
             console.log(error)

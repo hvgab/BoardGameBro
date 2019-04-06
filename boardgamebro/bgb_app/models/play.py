@@ -26,5 +26,9 @@ class Play(models.Model):
     def players_string(self):
         return ', '.join(p.nickname for p in self.players.all())
 
+    @property
+    def final_scores(self):
+        pass
+
     def __str__(self):
         return f'[{self.date}] {self.game} -> {self.winner}'
