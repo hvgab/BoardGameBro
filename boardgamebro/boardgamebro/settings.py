@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'bgb_app',
     'rest_framework',
     'drf_yasg',
+    'widget_tweaks',
 ]
 
 REST_FRAMEWORK = {

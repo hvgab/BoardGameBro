@@ -20,6 +20,7 @@ urlpatterns = [
     ## PLAY
     path('plays/', PlayListView.as_view(), name='play-list'),
     path('plays/<int:pk>/', PlayDetailView.as_view(), name='play-detail'),
+    path('plays/<int:pk>/edit', PlayUpdateView.as_view(), name='play-update'),
     path('plays/create', PlayCreateView.as_view(), name='play-create'),
     ## GAME
     path('games/', GameListView.as_view(), name='game-list'),

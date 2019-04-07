@@ -1,12 +1,14 @@
 version: '3.1'
 
 services:
-  
+
   web:
     env_file: .env_dev
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: always
     ports:
-      # - "8000:8000"
-      - "8000:3031"
+      - "8000:8000"
+      # - "8000:3031"
       - "8001:9191"
     volumes:
       - .:/code
