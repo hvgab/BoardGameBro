@@ -5,6 +5,7 @@ from django.utils import timezone
 from .game import Game
 from .player import Player
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Play(models.Model):
@@ -26,5 +27,12 @@ class Play(models.Model):
     def players_string(self):
         return ', '.join(p.nickname for p in self.players.all())
 
+    @property
+    def final_scores(self):
+        pass
+
     def __str__(self):
         return f'[{self.date}] {self.game} -> {self.winner}'
+
+    def get_absolute_url(self):
+        return reverse('bgb:play-detail', kwargs={'pk': self.id})

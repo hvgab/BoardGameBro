@@ -38,13 +38,16 @@ INSTALLED_APPS = [
     'social_django',
     'bgb_app',
     'rest_framework',
+    'drf_yasg',
+    'widget_tweaks',
 ]
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES':
-    ['rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly']
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
+    'DEFAULT_AUTHENTICATION_CLASSES':
+    ['rest_framework.authentication.SessionAuthentication'],
 }
 
 INTERNAL_IPS = os.getenv('INTERNAL_IPS', '127.0.0.1')
@@ -140,8 +143,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': (os.getenv('POSTGRES_USER', 'developer-user'),
-        'PASSWORD': (os.getenv('POSTGRES_PASSWORD', 'developer-password'),
+        'USER': os.getenv('POSTGRES_USER', 'developer-user'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'developer-password'),
         'HOST': 'db',
         'PORT': 5432,
     }

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block pageheader %}
+  {% with header='Sessions' %}
+    {% include 'components/page-header.html' %}
+  {% endwith %}
+{% endblock %}
+
+{% block content %}
+
+<div class="level">
+  <div class="item">
+    <a class="button" href="{% url 'bgb:play-update' pk=object.id %}">Edit</a>
+  </div>
+</div>
+
+<section class="">
+  <table class="table">
+    <thead>
+      <tr>
+        <td></td>
+        <td>Game</td>
+        <td>Winner</td>
+        <td>Players</td>
+      </tr>
+    </thead>
+
+    <tr>
+      <td><a href="{% url 'bgb:play-detail' pk=object.id %}">{{ object.id }}</a></td>
+      <td><a href="{% url 'bgb:game-detail' pk=object.game.id %}">{{ object.game.name }}</a></td>
+      <td><a href="{% url 'bgb:player-detail' pk=object.winner.id as var %}{{ var }}">{{ object.winner.nickname }}</a></td>
+      <!-- <td>{{ object.players_string }}</td> -->
+      <td>
+        {% for player in object.players.all %}
+          <a href="{% url 'bgb:player-detail' pk=player.id %}">{{ player.nickname }}</a>
+        {% endfor %}
+      </td>
+    </tr>
+
+  </table>
+</section>
+
+{% endblock %}

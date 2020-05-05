@@ -5,7 +5,8 @@
     <ul class="menu-list">
       <li><a href="{% url 'bgb:player-list' %}">Players</a></li>
       <li><a href="{% url 'bgb:game-list' %}">Games</a></li>
-      <li><a href="{% url 'bgb:play-list' %}">Plays</a></li>
+      <li><a href="{% url 'bgb:play-list' %}">Sessions</a></li>
+      <li><a href="{% url 'bgb:play-create' %}">New Session</a></li>
     </ul>
     {% if request.user.is_authenticated %}
     <p class="menu-label">{{ request.user.username }}</p>
@@ -18,6 +19,10 @@
     <p class="menu-label">Admin</p>
     <ul class="menu-list">
       <li><a href="{% url 'admin:index' %}">Admin</a></li>
+      <li><a href="/api/">Api</a></li>
+      <li><a href="/api-docs/">Api Docs</a></li>
+      <li><a href="/api-docs-swagger/">Api Docs Swagger</a></li>
+      <li><a href="/api-docs-redoc/">Api Docs Redoc</a></li>
     </ul>
     {% endif %}
     {% else %}

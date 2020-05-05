@@ -10,3 +10,9 @@ class PlayForm(forms.ModelForm):
     # if user is in a gamenight with date = today:
     # hook this play into that gamenight, and show gamenight at top of form.
     # players should be default selected with players from gamenight, total list should be frineds of host.
+
+
+class MiniPlayForm(forms.ModelForm):
+    class Meta:
+        model = Play
+        fields = ['game', 'players', 'winner']

@@ -13,12 +13,15 @@ class Player(models.Model):
         User, on_delete=models.SET_NULL, null=True, related_name='creator_of')
     is_deleted = models.BooleanField(
         default=False, verbose_name='player is deleted')
-    deleted_at = models.DateTimeField(verbose_name='player was deleted at')
+    deleted_at = models.DateTimeField(
+        verbose_name='player was deleted at', null=True, blank=True)
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True)
     email_communication = models.BooleanField(
-        default=True,
-        verbose_name='Would you like to get awesome news from us?')
+        default=False,  # GDPR Opt-IN
+        verbose_name='Would you like to get awesome news from us?',
+        null=True,
+        blank=True)
 
     # PLAYER STUFF
     nickname = models.CharField(max_length=255)

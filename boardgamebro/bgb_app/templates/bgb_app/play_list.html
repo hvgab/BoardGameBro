@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block pageheader %}
   {% with header='Sessions' %}
@@ -7,6 +8,49 @@
 {% endblock %}
 
 {% block content %}
+
+<form method="post" action="{% url 'bgb:play-create' %}">
+  {% csrf_token %}
+
+  {{ form.non_field_errors }}
+
+  <div class="field is-horizontal">
+    <div class="field-body">
+
+      <div class="field">
+        <div class="control">
+          {% render_field form.game class+="input" %}
+        </div>
+        <p class="help is-danger"></p>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <div class="select is-multiple">
+            {{ form.players }}
+          </div>
+        </div>
+        <p class="help is-danger"></p>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            {{ form.winner }}
+          </div>
+        </div>
+        <p class="help is-danger"></p>
+      </div>
+
+
+      <!-- <input type="submit" name="" value="Submit"> -->
+      <button class="button" type="submit" name="button">Submit</button>
+
+    </div>
+  </div>
+
+</form>
+
 <section class="">
   <table class="table">
     <thead>
@@ -17,15 +61,15 @@
         <td>Players</td>
       </tr>
     </thead>
-    {% for row in object_list %}
+    {% for session in object_list %}
     <tr>
-      <td><a href="{% url 'bgb:play-detail' pk=row.id %}">{{ row.id }}</a></td>
-      <td><a href="{% url 'bgb:game-detail' pk=row.game.id %}">{{ row.game.name }}</a></td>
-      <td><a href="{% url 'bgb:player-detail' pk=row.winner.id %}">{{ row.winner.nickname }}</a></td>
-      <!-- <td>{{ row.players_string }}</td> -->
+      <td><a href="{% url 'bgb:play-detail' pk=session.id %}">{{ session.id }}</a></td>
+      <td><a href="{% url 'bgb:game-detail' pk=session.game.id as var %}{{var}}">{{ session.game.name }}</a></td>
+      <td><a href="{% url 'bgb:player-detail' pk=session.winner.id as var %}{{var}}">{{ session.winner.nickname }}</a></td>
+      <!-- <td>{{ session.players_string }}</td> -->
       <td>
-        {% for player in row.players.all %}
-          <a href="{% url 'bgb:player-detail' pk=player.id %}">{{ player.nickname }}</a>
+        {% for player in session.players.all %}
+          <a href="{% url 'bgb:player-detail' pk=player.id as var %}{{var}}">{{ player.nickname }}</a>
         {% endfor %}
       </td>
     </tr>

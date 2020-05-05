@@ -1,9 +1,13 @@
-from django.views.generic import ListView, DetailView, FormView, TemplateView, CreateView
+from django.views.generic import ListView, DetailView, FormView, TemplateView, CreateView, UpdateView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from ..models import Player, Play, Game
-from ..forms import PlayForm
+from ..forms import PlayForm, MiniPlayForm
 from django.db.models import Count, Q
+
+
+class SessionForm(TemplateView):
+    template_name = 'session_form.html'
 
 
 class HomeView(TemplateView):
@@ -118,12 +122,14 @@ class PlayListView(ListView):
         context['fields'] = [
             field.name for field in self.model._meta.get_fields()
         ]
+        context['form'] = MiniPlayForm
         return context
 
 
 class PlayDetailView(DetailView):
     model = Play
-    template_name = 'bgb_app/generic_detail.html'
+    # template_name = 'bgb_app/generic_detail.html'
+    template_name = 'bgb_app/play_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -134,5 +140,10 @@ class PlayDetailView(DetailView):
 
 
 class PlayCreateView(CreateView):
+    model = Play
+    fields = '__all__'
+
+
+class PlayUpdateView(UpdateView):
     model = Play
     fields = '__all__'
