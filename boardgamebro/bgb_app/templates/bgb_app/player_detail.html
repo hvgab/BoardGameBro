@@ -1,18 +1,14 @@
 {% extends 'base.html' %}
 
 {% block pageheader %}
-  {% with header=player.name %}
+  {% with header=player.nickname subtitle=player.created_at %}
     {% include 'components/page-header.html' %}
   {% endwith %}
 {% endblock %}
 
 {% block content %}
 
-<header class="hero">
-  <div class="hero-body">
-    <h1 class="title">{{ player.name }}</h1>
-  </div>
-</header>
+<button type="button" name="button" class="button is-info">Add Friend</button>
 
 <div class="level">
   <div class="level-item has-text-centered">

@@ -36,11 +36,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'social_django',
+    'rest_framework',
     'bgb_app',
     'rest_framework',
     'drf_yasg',
     'widget_tweaks',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':
+    ['rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly']
+}
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
