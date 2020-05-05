@@ -2,3 +2,7 @@
 __pycache__
 *.pyc
 *.env*
+<<<<<<< HEAD
+=======
+postgresdata/
+>>>>>>> origin/dependabot/pip/django-2.2.10
