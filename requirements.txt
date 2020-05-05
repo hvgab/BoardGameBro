@@ -1,4 +1,5 @@
 -i https://pypi.org/simple/
+<<<<<<< HEAD
 certifi==2019.11.28
 chardet==3.0.4
 defusedxml==0.6.0 ; python_version >= '3.0'
@@ -17,3 +18,23 @@ social-auth-app-django==3.1.0
 social-auth-core==3.2.0
 sqlparse==0.3.0
 urllib3==1.25.8
+=======
+certifi==2019.9.11
+chardet==3.0.4
+defusedxml==0.6.0 ; python_version >= '3.0'
+django-debug-toolbar==1.11
+django==2.1.7
+idna==2.8
+oauthlib==3.1.0
+pillow==6.2.0
+pyjwt==1.7.1
+python3-openid==3.1.0 ; python_version >= '3.0'
+pytz==2019.3
+requests-oauthlib==1.2.0
+requests==2.22.0
+six==1.12.0
+social-auth-app-django==3.1.0
+social-auth-core==3.2.0
+sqlparse==0.3.0
+urllib3==1.25.6
+>>>>>>> origin/dependabot/pip/pillow-6.2.0
