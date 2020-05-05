@@ -9,7 +9,6 @@ RUN mkdir /code
 COPY . /code
 WORKDIR /code/boardgamebro
 
-<<<<<<< HEAD
 EXPOSE 8000
 
 ENV SECRET_KEY=abc
@@ -27,7 +26,7 @@ ENV SOCIAL_AUTH_DISCORD_SECRET=Ju-EsScYEXZB3UXZ_QSEtgdMqR_AZDmm
 
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-=======
+
 EXPOSE 3031
 EXPOSE 9191
->>>>>>> Postgres & uWSGI 👨‍🚀🚀
+
