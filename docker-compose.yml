@@ -1,11 +1,20 @@
 version: '3.1'
 
 services:
+  
   web:
     env_file: .env_dev
     build: .
     # command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    command: bash -c "uwsgi --socket 0.0.0.0:3031 --wsgi-file boardgamebro/wsgi.py --master --processes 4 --threads 2 --stats 0.0.0.0:9191 --protocol http"
+    command: bash -c "python manage.py collectstatic --no-input &&
+             uwsgi --socket 0.0.0.0:3031
+             --wsgi-file boardgamebro/wsgi.py
+             --master
+             --processes 4
+             --threads 2
+             --stats 0.0.0.0:9191
+             --protocol http
+             --static-map /static=/static"
     # deploy:
     #   replicas: 2
     #   restart_policy:
@@ -13,12 +22,12 @@ services:
     #   resources:
     #     cpus: "0.2"
     #     memory: 100M
-    ports:
+    # ports:
       # - "8000:8000"
-      - "8000:3031"
-      - "8001:9191"
-    volumes:
-      - .:/code
+      # - "80:3031"
+      # - "8001:9191"
+    # volumes:
+    #   - .:/code
     depends_on:
       - db
 
@@ -26,12 +35,6 @@ services:
     image: postgres
     volumes:
       - postgresdata:/var/lib/postgresql/data
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8080:8080"
 
 volumes:
   postgresdata:
