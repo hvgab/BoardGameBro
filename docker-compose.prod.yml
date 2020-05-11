@@ -4,7 +4,36 @@ services:
   
   web:
     env_file: .env
+    build: .
+    command: bash -c "python manage.py collectstatic --no-input &&
+             uwsgi --socket 0.0.0.0:3031
+             --wsgi-file boardgamebro/wsgi.py
+             --master
+             --processes 4
+             --threads 2
+             --stats 0.0.0.0:9191
+             --protocol http
+             --static-map /static=/static"
+    # deploy:
+    #   replicas: 2
+    #   restart_policy:
+    #     condition: on-failure
+    #   resources:
+    #     cpus: "0.2"
+    #     memory: 100M
     ports:
       # - "8000:8000"
       - "80:3031"
       - "8001:9191"
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+
+volumes:
+  postgresdata:

@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'social_django',
     'rest_framework',
-    'bgb_app',
-    'rest_framework',
+    'core',
     'drf_yasg',
     'widget_tweaks',
 ]
