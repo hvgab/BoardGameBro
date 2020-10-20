@@ -41,7 +41,7 @@ apirouter = routers.DefaultRouter()
 apirouter.register('games', api_views.GameViewSet)
 apirouter.register('gamenight', api_views.GamenightViewSet)
 apirouter.register('location', api_views.LocationViewSet)
-apirouter.register('plays', api_views.PlayViewSet)
+apirouter.register('playthroughs', api_views.PlaythroughViewSet)
 apirouter.register('players', api_views.PlayerViewSet)
 apirouter.register('scores', api_views.ScoreViewSet)
 

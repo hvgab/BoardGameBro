@@ -1,13 +1,13 @@
 from django.views.generic import ListView, DetailView, FormView, TemplateView, CreateView, UpdateView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from ..models import Player, Play, Game
-from ..forms import PlayForm, MiniPlayForm
+from ..models import Player, Playthrough, Game
+from ..forms import PlaythroughForm, MiniPlaythroughForm
 from django.db.models import Count, Q
 
 
-class SessionForm(TemplateView):
-    template_name = 'session_form.html'
+class PlaythroughForm(TemplateView):
+    template_name = 'playthrough_form.html'
 
 
 class HomeView(TemplateView):
@@ -16,19 +16,19 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # MOST PLAYED GAME
-        most_played_game = Game.objects.annotate(Count(
-            'play', distinct=True)).order_by('-play__count').first()
-        print(most_played_game)
-        context['most_played_game'] = most_played_game
+        # MOST PLAYED GAME 
+        # most_played_game = Game.objects.annotate(Count(
+            # 'playthrough', distinct=True)).order_by('-playthrough__count').first()
+        # print(most_played_game)
+        # context['most_played_game'] = most_played_game
 
         # PLAYER WITH MOST PLAYS
-        player_most_plays = Player.objects.annotate(
-            Count('play', distinct=True)).order_by('-play__count').first()
-        print((player_most_plays))
-        context['player_most_plays'] = player_most_plays
+        # player_most_plays = Player.objects.annotate(
+        #     Count('playthrough', distinct=True)).order_by('-playthrough__count').first()
+        # print((player_most_plays))
+        # context['player_most_plays'] = player_most_plays
 
-        return context
+        # return context
 
 
 # PLAYER
@@ -43,8 +43,8 @@ class PlayerListView(ListView):
         # players = Player.objects.annotate(Count(
         #     'games', distinct=True)).annotate(
         #         win__count=Count(
-        #             'play', distinct=True, filter=Q(
-        #                 play__winner__id=id))).all()
+        #             'playthrough', distinct=True, filter=Q(
+        #                 playthrough__winner__id=id))).all()
 
         return context
 
@@ -90,7 +90,7 @@ class GameListView(ListView):
 
     def get_queryset(self):
         queryset = Game.objects.annotate(
-            Count('play', distinct=True)).annotate(
+            Count('playthrough', distinct=True)).annotate(
                 Count('player', distinct=True)).all()
 
         # for row in queryset:
@@ -110,40 +110,40 @@ class GameDetailView(DetailView):
         return context
 
 
-# PLAY
-class PlayListView(ListView):
-    model = Play
+# Playthrough ( one playthroug of a game )
+class PlaythroughListView(ListView):
+    model = Playthrough
 
     # template_name = 'core/generic_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['detail_view'] = 'bgb:play-detail'
+        context['detail_view'] = 'bgb:playthrough-detail'
         context['fields'] = [
-            field.name for field in self.model._meta.get_fields()
+            field.name for field in self.Playthrough._meta.get_fields()
         ]
-        context['form'] = MiniPlayForm
+        context['form'] = MiniPlaythroughForm
         return context
 
 
-class PlayDetailView(DetailView):
-    model = Play
+class PlaythroughDetailView(DetailView):
+    model = Playthrough
     # template_name = 'core/generic_detail.html'
-    template_name = 'core/play_detail.html'
+    template_name = 'core/playthrough_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['fields'] = [
-            field.name for field in self.model._meta.get_fields()
+            field.name for field in self.Playthrough._meta.get_fields()
         ]
         return context
 
 
-class PlayCreateView(CreateView):
-    model = Play
+class PlaythroughCreateView(CreateView):
+    model = Playthrough
     fields = '__all__'
 
 
-class PlayUpdateView(UpdateView):
-    model = Play
+class PlaythroughUpdateView(UpdateView):
+    model = Playthrough
     fields = '__all__'

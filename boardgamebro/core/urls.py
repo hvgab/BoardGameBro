@@ -5,7 +5,8 @@ from .views import *
 app_name = 'bgb'
 
 urlpatterns = [
-    path('session_form', SessionForm.as_view(), name='session-form'),
+    path('playthrough_form', PlaythroughForm.as_view(), name='playthrough-form'),
+    # path('playthrough_form', PlaythroughForm.as_view(), name='playthrough-form'),
 
     # BGB APP
     path('', HomeView.as_view(), name='home'),
@@ -19,12 +20,13 @@ urlpatterns = [
     path('players/<int:pk>/', PlayerDetailView.as_view(), name='player-detail'),
     
     ## PLAY
-    path('plays/', PlayListView.as_view(), name='play-list'),
-    path('plays/<int:pk>/', PlayDetailView.as_view(), name='play-detail'),
-    path('plays/<int:pk>/edit', PlayUpdateView.as_view(), name='play-update'),
-    path('plays/create', PlayCreateView.as_view(), name='play-create'),
+    path('playthroughs/', PlaythroughListView.as_view(), name='playthrough-list'),
+    path('playthroughs/<int:pk>/', PlaythroughDetailView.as_view(), name='playthrough-detail'),
+    path('playthroughs/<int:pk>/edit', PlaythroughUpdateView.as_view(), name='playthrough-update'),
+    path('playthroughs/create', PlaythroughCreateView.as_view(), name='playthrough-create'),
     
     ## GAME
     path('games/', GameListView.as_view(), name='game-list'),
     path('games/<int:pk>/', GameDetailView.as_view(), name='game-detail'),
 ]
+

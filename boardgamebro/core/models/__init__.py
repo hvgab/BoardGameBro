@@ -1,6 +1,6 @@
 from .game import Game
 from .gamenight import Gamenight
 from .location import Location
-from .play import Play
+from .playthrough import Playthrough
 from .player import Player
 from .score import Score

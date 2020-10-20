@@ -9,6 +9,11 @@ An app to keep track of who wins when you're playing boardgames.
 -   What games do you play the most?
 -   Which games do you and your friends own?
 
+## Install / Run
+git clone
+docker-compose up --build
+
+
 # Icons
 -   [icons8](https://icons8.com/icon/pack/gaming/dusk)
 -   [flaticon](https://www.flaticon.com/packs/games-10)
@@ -18,3 +23,4 @@ This project tries it best to follow
 -   [git flow](https://jeffkreeftmeijer.com/git-flow/)
 -   [semver](https://semver.org/)
 -   [keepachangelog](https://keepachangelog.com/en/0.3.0/)
+

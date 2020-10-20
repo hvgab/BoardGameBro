@@ -8,20 +8,15 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
-class Play(models.Model):
+class Playthrough(models.Model):
     """Players have played a game"""
     name = models.CharField(max_length=50, null=True, blank=True)
     description = models.TextField(max_length=250, null=True, blank=True)
-    date = models.DateField(
-        default=timezone.now, help_text='When was the game played?')
-    game = models.ForeignKey(
-        Game,
-        on_delete=models.SET_NULL,
-        null=True,
-        help_text='What game was played?')
+    date = models.DateField(default=timezone.now, help_text='When was the game played?')
+    game = models.ForeignKey(Game, on_delete=models.SET_NULL, null=True, help_text='What game was played?')
     players = models.ManyToManyField(Player, help_text='Who was playing?')
-    winner = models.ForeignKey(
-        Player, on_delete=models.SET_NULL, null=True, related_name='winner')
+    winner = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True, related_name='winner')
+    gamenight = models.ForeignKey(to='Gamenight', on_delete=models.CASCADE, null=True, blank=True)
 
     @property
     def players_string(self):

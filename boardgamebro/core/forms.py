@@ -1,10 +1,10 @@
 from django import forms
-from .models import Play
+from .models import Playthrough
 
 
-class PlayForm(forms.ModelForm):
+class PlaythroughForm(forms.ModelForm):
     class Meta:
-        model = Play
+        model = Playthrough
         fields = ['name', 'date', 'game', 'players', 'winner']
 
     # if user is in a gamenight with date = today:
@@ -12,7 +12,7 @@ class PlayForm(forms.ModelForm):
     # players should be default selected with players from gamenight, total list should be friends of host.
 
 
-class MiniPlayForm(forms.ModelForm):
+class MiniPlaythroughForm(forms.ModelForm):
     class Meta:
-        model = Play
+        model = Playthrough
         fields = ['game', 'players', 'winner']

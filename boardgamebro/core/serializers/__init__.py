@@ -3,27 +3,27 @@ from django.contrib.auth import models as auth_models
 from .. import models
 
 
-class GameSerializer(serializers.ModelSerializer):
+class GameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Game
         fields = '__all__'
 
 
-class GamenightSerializer(serializers.ModelSerializer):
+class GamenightSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Gamenight
         fields = '__all__'
 
 
-class LocationSerializer(serializers.ModelSerializer):
+class LocationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Location
         fields = '__all__'
 
 
-class PlaySerializer(serializers.ModelSerializer):
+class PlaythroughSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = models.Play
+        model = models.Playthrough
         fields = '__all__'
 
 
@@ -31,13 +31,6 @@ class FriendSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Player
         fields = ['url', 'id', 'nickname']
-
-
-# class PlayerSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = models.Player
-#         exclude = ['user']
-
 
 class PlayerSerializer(serializers.HyperlinkedModelSerializer):
     friends = FriendSerializer(many=True)
@@ -51,7 +44,7 @@ class PlayerSerializer(serializers.HyperlinkedModelSerializer):
         # TODO: GET should return FriendSerializer, but put and patch should just use pk as update value.
 
 
-class ScoreSerializer(serializers.ModelSerializer):
+class ScoreSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Score
         fields = '__all__'

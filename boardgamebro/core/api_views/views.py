@@ -19,9 +19,9 @@ class LocationViewSet(viewsets.ModelViewSet):
     serializer_class = LocationSerializer
 
 
-class PlayViewSet(viewsets.ModelViewSet):
-    queryset = Play.objects.all()
-    serializer_class = PlaySerializer
+class PlaythroughViewSet(viewsets.ModelViewSet):
+    queryset = Playthrough.objects.all()
+    serializer_class = PlaythroughSerializer
 
 
 class PlayerViewSet(viewsets.ModelViewSet):
