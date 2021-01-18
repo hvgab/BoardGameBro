@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'social_django',
+    # 'social_django',
     'bgb_app',
 ]
 
@@ -53,9 +53,9 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.reddit.RedditOAuth2',
-    'social_core.backends.discord.DiscordOAuth2',
+    # 'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.reddit.RedditOAuth2',
+    # 'social_core.backends.discord.DiscordOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 SOCIAL_AUTH_PIPELINE = (
@@ -116,8 +116,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+                # 'social_django.context_processors.backends',
+                # 'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -129,13 +129,17 @@ WSGI_APPLICATION = 'boardgamebro.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'postgres',
+    #     'USER': os.getenv('POSTGRES_USER', 'postgres'),
+    #     'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'example'),
+    #     'HOST': 'db',
+    #     'PORT': 5432,
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': os.getenv('POSTGRES_USER', 'developer-user'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'developer-password'),
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'boardgamebro.sqlite3',
     }
 }
 
@@ -170,16 +174,11 @@ SOCIAL_AUTH_REDDIT_AUTH_EXTRA_ARGUMENTS = {
 
 # # Google OAuth2 (google-oauth2)
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv(
-    'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
-SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
-    'redirect_uri': os.getenv('GOOGLE_REDIRECT')
-}
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {'redirect_uri': os.getenv('GOOGLE_REDIRECT')}
 SOCIAL_AUTH_DISCORD_KEY = os.getenv('SOCIAL_AUTH_DISCORD_KEY')
 SOCIAL_AUTH_DISCORD_SECRET = os.getenv('SOCIAL_AUTH_DISCORD_SECRET')
-SOCIAL_AUTH_DISCORD_AUTH_EXTRA_ARGUMENTS = {
-    'redirect_uri': os.getenv('DISCORD_REDIRECT')
-}
+SOCIAL_AUTH_DISCORD_AUTH_EXTRA_ARGUMENTS = {'redirect_uri': os.getenv('DISCORD_REDIRECT')}
 SOCIAL_AUTH_DISCORD_SCOPE = ['email']
 
 # Internationalization
@@ -187,7 +186,7 @@ SOCIAL_AUTH_DISCORD_SCOPE = ['email']
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Oslo'
 
 USE_I18N = True
 

@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, FormView, TemplateView, CreateView
+from django.views.generic import ListView, DetailView, FormView, TemplateView, CreateView, UpdateView, DeleteView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from ..models import Player, Play, Game
@@ -45,6 +45,11 @@ class PlayerListView(ListView):
         return context
 
 
+class PlayerCreateView(CreateView):
+    model = Player
+    fields = '__all__'
+
+
 class PlayerDetailView(DetailView):
     model = Player
     template_name = 'bgb_app/player_detail.html'
@@ -69,6 +74,18 @@ class PlayerDetailView(DetailView):
         context['most_played_player']['winrate'] = winrate
 
         return context
+
+
+class PlayerUpdateView(UpdateView):
+    model = Player
+    fields = '__all__'
+    
+
+class PlayerDeleteView(DeleteView):
+    model = Player
+    success_url = reverse_lazy('player-list')
+
+
 
 
 # GAME

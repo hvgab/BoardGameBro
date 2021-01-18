@@ -5,11 +5,9 @@ name = "pypi"
 
 [packages]
 django = "*"
-social-auth-app-django = "*"
 django-debug-toolbar = "*"
-pillow = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.9"

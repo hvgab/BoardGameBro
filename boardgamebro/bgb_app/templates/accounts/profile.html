@@ -22,9 +22,9 @@ You should probably <a>merge</a> these users.
 
 <p>You have connected to:</p>
 <ul>
-  {% for userauth in request.user.social_auth.all %}
+  {# for userauth in request.user.social_auth.all %}
   <li>{{ userauth.provider }}</li>
-  {% endfor %}
+  {% endfor #}
 </ul>
 </div>
 

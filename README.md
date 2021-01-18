@@ -19,3 +19,11 @@ An app to keep track of who wins when you're playing boardgames.
 ## Icons
 - https://icons8.com/icon/pack/gaming/dusk
 - https://www.flaticon.com/packs/games-10
+
+
+# SOCIAL AUTH LINKS
+Reddit https://www.reddit.com/prefs/apps
+Discord https://discordapp.com/developers/applications/
+
+# Testing
+https://locust.io/

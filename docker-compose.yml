@@ -15,7 +15,7 @@ services:
     #     memory: 100M
     ports:
       # - "8000:8000"
-      - "80:3031"
+      - "8000:3031"
       - "8001:9191"
     volumes:
       - .:/code
@@ -24,14 +24,18 @@ services:
 
   db:
     image: postgres
+    environment:
+      POSTGRES_PASSWORD: example
     volumes:
       - postgresdata:/var/lib/postgresql/data
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8080:8080"
+  # adminer:
+  #   image: adminer
+  #   depends_on: 
+  #     - db
+  #   restart: always
+  #   ports:
+  #     - "8080:8080"
 
 volumes:
   postgresdata:
